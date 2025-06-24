@@ -45,6 +45,33 @@ app.get('/products', async (req, res) => {
   }
 });
 
+// PUT /products/:id - Update a product
+app.put('/products/:id', async (req, res) => {
+  try {
+    const { name, price } = req.body;
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { name, price },
+      { new: true, runValidators: true }
+    );
+    if (!product) return res.status(404).json({ error: 'Product not found' });
+    res.json({ message: 'Product updated', product });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// DELETE /products/:id - Delete a product
+app.delete('/products/:id', async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) return res.status(404).json({ error: 'Product not found' });
+    res.json({ message: 'Product deleted' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
