@@ -7,9 +7,9 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Navigate to="/add-product" replace />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/all-product" element={<AllProduct />} />
-        <Route path="/" element={<Navigate to="/add-product" replace />} />
       </Routes>
     </Router>
   );

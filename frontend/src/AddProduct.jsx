@@ -4,13 +4,16 @@ import { useNavigate } from 'react-router-dom';
 function AddProduct() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+
   const [message, setMessage] = useState('');
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
     try {
+
       const res = await fetch('http://localhost:5000/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -24,8 +27,9 @@ function AddProduct() {
       } else {
         setMessage(data.error || 'Error adding product');
       }
+
     } catch (err) {
-      setMessage('Network error: ' + err.message);
+      setMessage('Error: ' + err.message);
     }
   };
 
@@ -50,7 +54,9 @@ function AddProduct() {
         <br /><br />
         <button type="submit">Add Product</button>
       </form>
+
       {message && <p>{message}</p>}
+
       <button style={{marginTop: '20px'}} onClick={() => navigate('/all-product')}>Show All Product</button>
     </>
   );

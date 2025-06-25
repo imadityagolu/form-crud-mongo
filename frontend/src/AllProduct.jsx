@@ -54,12 +54,15 @@ function AllProduct() {
   const handleEditSave = async (id) => {
     setActionMsg('');
     try {
+
       const res = await fetch(`http://localhost:5000/products/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: editName, price: Number(editPrice) })
       });
+
       const data = await res.json();
+      
       if (res.ok) {
         setActionMsg('Product updated');
         setProducts(products.map(p => p._id === id ? { ...p, name: editName, price: editPrice } : p));
